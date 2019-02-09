@@ -5,17 +5,17 @@ const db = require('../data/dbConfig');
 describe('the route handlers', () => {
 
     beforeEach( () => {
-        knex.migrate.rollback()
+        return db.migrate.rollback()
             .then( () => {
-                knex.migrate.latest()
+                return db.migrate.latest()
                     .then( () => {
-                        return knex.seed.run()
+                        return db.seed.run()
                     })
             })
     })
 
     afterEach(async () => {
-        await knex.migrate.rollback()
+        await db.migrate.rollback()
     });
 
 
@@ -83,8 +83,8 @@ describe('the route handlers', () => {
 
         it('responds with 400 to duplicate name', async () => {
             const newGirl = {
-                name: `Grace O'Malley`,
-                occupation: "Pirate"
+                name: "Billie Jean King",
+                occupation: "Tennis Player"
             }
             const response = await request(server).post('/').send(newGirl)
 

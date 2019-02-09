@@ -3,12 +3,37 @@ const db = require('../rebelgirls/rebelgirlsModel');
 const server = express();
 server.use(express.json());
 
-server.get('/', async (req, res) => {
+require('events').EventEmitter.defaultMaxListeners = 0
 
+server.get('/', async (req, res) => {
+    db.fetch()
+        .then(girls => {
+            res.json(girls)
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "Could not fetch those Rebel Girls!"
+            })
+        })
 })
 
 server.get('/:id', async (req, res) => {
-
+    const {id} = req.params;
+    db.fetch(id)
+        .then(girl => {
+            if(girl){
+            res.json(girl)
+            } else{
+                res.status(404).json({
+                    message: "That Rebel Girl does not yet exist!"
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).json({
+                message: "That Rebel Girl could not be fetched."
+            })
+        })
 })
 
 server.post('/', (req, res) => {
@@ -16,12 +41,12 @@ server.post('/', (req, res) => {
 
     if(girl.name && girl.occupation){
         db.insert(girl)
-            .then(res => {
-                res.status(201).json(posted)
+            .then(response => {
+                res.status(201).json(response)
             })
             .catch(err => {
-                res.status(500).json({
-                    message: "There was an error adding this Rebel Girl."
+                res.status(400).json({
+                    message: "Are you sure this Rebel Girl doesn't already exist?"
                 })
             })
     } else if(girl.name){
@@ -48,31 +73,18 @@ server.delete('/:id', async (req, res) => {
                 .then(response => {
                     if(response){
                         res.json(rebelGirl)
+                    } else {
+                        res.status(404).json({
+                            message: "This Rebel Girl does not exist"
+                        })
                     }
-                })
-                .catch(err => {
-                    res.status(500).json({
-                        message: 'This Rebel Girl is too fierce to erase from history.'
-                    })
                 })
         })
         .catch(err => {
-            res.status(404).json({
-                message: "That doesn't seem to be a real Rebel Girl. Try again?"
+            res.status(500).json({
+                message: 'This Rebel Girl is too fierce to erase from history.'
             })
         })
 })
 
-//get all
-//get by id
-//404 if id doesn't exist
-//200 if get is successful
-
-
-//check that name is unique before posting
-//return 400 if not
-//201 if post is successful
-
-//for delete, check it exists
-//404 if it doesn't
-//200 if successful
+module.exports = server;

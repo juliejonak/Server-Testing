@@ -1,4 +1,5 @@
 const db = require('../data/dbConfig');
+require('events').EventEmitter.defaultMaxListeners = 0
 
 const fetch = (id) => {
     if(id){
@@ -16,7 +17,7 @@ const fetch = (id) => {
 
 const insert = (girl) => {
     return db('rebelgirls').insert(girl)
-        .then( ([id]) => this.fetch(id))
+        .then( ([id]) => fetch(id))
 }
 
 const remove = (id) => {

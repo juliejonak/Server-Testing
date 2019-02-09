@@ -1,20 +1,22 @@
+
 const rebelgirls = require('./rebelgirlsModel');
 const db = require('../data/dbConfig.js');
+
 
 describe('the rebel girls model', () => {
 
     beforeEach( () => {
-        knex.migrate.rollback()
+        return db.migrate.rollback()
             .then( () => {
-                knex.migrate.latest()
+                return db.migrate.latest()
                     .then( () => {
-                        return knex.seed.run()
+                        return db.seed.run()
                     })
             })
     })
 
     afterEach(async () => {
-        await knex.migrate.rollback()
+        await db.migrate.rollback()
     });
 
 
@@ -22,7 +24,6 @@ describe('the rebel girls model', () => {
         const girls = await rebelgirls.fetch()
 
         expect(girls.length).toBe(4)
-        
     })
 
     it('should fetch a rebel girl by id', async () => {
@@ -34,7 +35,7 @@ describe('the rebel girls model', () => {
 
     it('should add a new rebel girl', async () => {
         const girls = await rebelgirls.insert({
-            name: 'Misty Copeland',
+            name: 'Missfhfy Copeland',
             occupation: "Ballerina"
         })
 
@@ -44,7 +45,7 @@ describe('the rebel girls model', () => {
     it('should delete an existing rebel girl by id', async () => {
         const deletion = await rebelgirls.remove(1);
 
-        expect(deletion.id).toBe(1);
+        expect(deletion).toBe(1);
     })
 
 })
