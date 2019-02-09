@@ -38,7 +38,7 @@ describe('the rebel girls model', () => {
             occupation: "Ballerina"
         })
 
-        expect(girls.length).toBe(5);
+        expect(girls.id).toBe(5);
     })
 
     it('should delete an existing rebel girl by id', async () => {
@@ -46,6 +46,5 @@ describe('the rebel girls model', () => {
 
         expect(deletion.name).toBe(`Kate O'Malley`);
     })
-
 
 })
