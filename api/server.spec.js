@@ -48,7 +48,7 @@ describe('the route handlers', () => {
             const response = await request(server).get('/1')
 
             expect(response.body.id).toEqual(1)
-            expect(response.body.name).toEqual(`Kate O'Malley`)
+            expect(response.body.name).toEqual(`Grace O'Malley`)
         })
 
         it('responds with 404 to invalid id', async () => {
@@ -83,7 +83,7 @@ describe('the route handlers', () => {
 
         it('responds with 400 to duplicate name', async () => {
             const newGirl = {
-                name: `Kate O'Malley`,
+                name: `Grace O'Malley`,
                 occupation: "Pirate"
             }
             const response = await request(server).post('/').send(newGirl)
@@ -105,7 +105,7 @@ describe('the route handlers', () => {
             const response = await request(server).delete('/1')
 
             expect(response.body.id).toEqual(1)
-            expect(response.body.name).toEqual(`Kate O'Malley`)
+            expect(response.body.name).toEqual(`Grace O'Malley`)
         })
 
         it('responds with 404 to invalid id', async () => {

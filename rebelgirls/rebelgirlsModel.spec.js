@@ -28,7 +28,7 @@ describe('the rebel girls model', () => {
     it('should fetch a rebel girl by id', async () => {
         const girls = await rebelgirls.fetch(1)
 
-        expect(girls.name).toBe(`Kate O'Malley`)
+        expect(girls.name).toBe(`Grace O'Malley`)
 
     })
 
@@ -44,7 +44,7 @@ describe('the rebel girls model', () => {
     it('should delete an existing rebel girl by id', async () => {
         const deletion = await rebelgirls.remove(1);
 
-        expect(deletion.name).toBe(`Kate O'Malley`);
+        expect(deletion.id).toBe(1);
     })
 
 })
